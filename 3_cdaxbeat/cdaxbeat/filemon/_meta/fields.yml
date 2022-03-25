@@ -1,0 +1,15 @@
+- name: filemon
+  type: group
+  release: beta
+  description: >
+    filemon
+  fields:
+    - name: time_delta 
+      type: group 
+      description: seconds since last modification of the file
+      fields:
+        - name: file_name
+          type: keyword
+          name: max_delta
+          type: long 
+                

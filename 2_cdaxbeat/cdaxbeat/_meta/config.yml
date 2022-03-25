@@ -1,0 +1,9 @@
+- module: cdaxbeat
+  metricsets: ["filemon"]
+  enabled: true
+  period: 10s
+  hosts: ["localhost"]
+  files:
+  - "/var/log/syslog"
+
+

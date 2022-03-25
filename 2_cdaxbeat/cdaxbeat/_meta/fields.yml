@@ -1,0 +1,13 @@
+- key: cdaxbeat
+  title: "cdaxbeat"
+  release: beta
+  description: >
+    cdaxbeat module
+  fields:
+    - name: cdaxbeat
+      type: group
+      description: >
+    - name: filemon.filename
+      type: keyword
+      description: >
+        Name of the plugin collecting these metrics.

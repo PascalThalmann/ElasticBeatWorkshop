@@ -6,13 +6,13 @@
     },
     "metricset":{
         "host":"localhost",
-        "module":"cdaxbeat",
-        "name":"filemon",
+        "module":"my_module",
+        "name":"file_mon",
         "rtt":44269
     },
-    "cdaxbeat":{
-        "filemon":{
-            "example": "filemon"
+    "my_module":{
+        "file_mon":{
+            "example": "file_mon"
         }
     },
     "type":"metricsets"

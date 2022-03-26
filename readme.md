@@ -1,3 +1,3 @@
-# Elasticsearch Beat Workshop
+# Elassticsearch Beat Workshop
 
 This is the repo of the Elasticsearch Beat Workshop

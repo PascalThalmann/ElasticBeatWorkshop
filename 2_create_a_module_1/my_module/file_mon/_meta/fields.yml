@@ -1,0 +1,10 @@
+- name: file_mon
+  type: group
+  release: beta
+  description: >
+    file_mon
+  fields:
+    - name: files
+      type: object
+      description: >
+        the filenames with full path of the files that will monitored

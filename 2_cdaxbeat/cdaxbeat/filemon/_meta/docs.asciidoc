@@ -1,2 +1,0 @@
-This is the filemon metricset of the module cdaxbeat.
-

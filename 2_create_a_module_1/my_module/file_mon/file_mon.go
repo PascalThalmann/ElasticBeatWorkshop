@@ -43,7 +43,7 @@ func New(base mb.BaseMetricSet) (mb.MetricSet, error) {
 
 	return &MetricSet{
 		BaseMetricSet: 	base,
-		files:			config.Files,
+		files:		config.Files,
 	}, nil
 }
 

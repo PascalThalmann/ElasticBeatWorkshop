@@ -1,0 +1,10 @@
+# Module: my_module
+# Docs: https://www.elastic.co/guide/en/beats/metricbeat/master/metricbeat-module-my_module.html
+
+- module: my_module
+  metricsets: ["file_mon"]
+  enabled: true
+  period: 10s
+  hosts: ["localhost"]
+  files:
+  - "/var/log/syslog"

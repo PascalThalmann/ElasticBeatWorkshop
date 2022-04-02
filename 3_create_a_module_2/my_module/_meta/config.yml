@@ -1,0 +1,15 @@
+- module: my_module
+  metricsets: ["file_mon"]
+  enabled: true
+  period: 10s
+  hosts: ["localhost"]
+  default_max_delta: 600
+  default_start_time: [8, 0]
+  default_end_time: [20, 0]
+  default_monitoring_week_days: [1, 2, 3, 4, 5]
+  files:
+  - file_name: "/var/log/syslog"
+    max_delta: 1200
+    monitorin_start_time: [7, 0]
+    monitoring_end_time: [22, 0]
+    monitoring_week_days: [1, 2, 3, 4, 5]

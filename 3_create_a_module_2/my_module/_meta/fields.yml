@@ -1,0 +1,11 @@
+- key: my_module
+  title: "my_module"
+  release: beta
+  description: >
+    my_module module is part of the metricbeat workshop 2
+  fields:
+    - name: my_module
+      type: group
+      description: >
+      fields:
+

@@ -1,0 +1,1 @@
+This is the my_module module. You can find the sourcecode in https://github.com/PascalThalmann/ElasticBeatWorkshop/tree/master/3_create_a_module_2

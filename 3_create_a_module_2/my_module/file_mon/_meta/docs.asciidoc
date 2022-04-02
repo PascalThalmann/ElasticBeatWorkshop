@@ -1,0 +1,2 @@
+This is the file_mon metricset of the module my_module. The metricset reads the last modicfication time and subtracts it from the current time. 
+The result will be a field delta wich will be send to the Elasticsearch cluster

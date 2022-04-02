@@ -1,4 +1,4 @@
-# Elassticsearch Beat Workshop
+# Elasticsearch Beat Workshop
 
 
 Welcome to [ElasticBeatWorkshop/](https://https://github.com/PascalThalmann/ElasticBeatWorkshop). You probably came from [cdax.ch](https://cdax.ch/tag/elasticsearch-beat-workshop/) or [https://pascalth.medium.com/](https://pascalth.medium.com/). 

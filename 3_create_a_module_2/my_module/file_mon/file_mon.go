@@ -25,16 +25,11 @@ func init() {
 // interface methods except for Fetch.
 type MetricSet struct {
 	mb.BaseMetricSet
+	DefaultMaxDelta			int
+	DefaultStartTime		[]int
+	DefaultEndTime			[]int
+	DefaultWeekDays			[]int
 	FileConfig 				[]FileConfig
-	file_name 				string
-	max_delta 				int
-	default_max_delta		int
-	default_start_time		[]int
-	default_end_time		[]int
-	default_week_days		[]int
-	delta 					int
-	alert 					bool
-	active					bool
 }
 
 // New creates a new instance of the MetricSet. New is responsible for unpacking
@@ -51,10 +46,10 @@ func New(base mb.BaseMetricSet) (mb.MetricSet, error) {
 	return &MetricSet{
 		BaseMetricSet:  		base,
 		FileConfig:     		config.FileConfig,
-		default_max_delta:  	config.default_max_delta,
-		default_start_time:		config.default_start_time,
-		default_end_time:		config.default_end_time,
-		default_week_days:		config.default_week_days,
+		DefaultMaxDelta:		config.DefaultMaxDelta,
+		DefaultStartTime:		config.DefaultStartTime,
+		DefaultEndTime:			config.DefaultEndTime,
+		DefaultWeekDays:		config.DefaultWeekDays,
 	}, nil
 }
 
@@ -63,7 +58,8 @@ func New(base mb.BaseMetricSet) (mb.MetricSet, error) {
 // of an error set the Error field of mb.Event or simply call report.Error().
 func (m *MetricSet) Fetch(report mb.ReporterV2) error {
 
-	FileConfig := m.FileConfig
+	FileConfig 			:= m.FileConfig
+
 	act_time := time.Now()
 	year := act_time.Year()
 	month := act_time.Month()
@@ -74,51 +70,61 @@ func (m *MetricSet) Fetch(report mb.ReporterV2) error {
 		f, _ := os.Open(file_config.FileName)
 		out, _ := f.Stat()
 		mod_time := out.ModTime()
-		delta := act_time.Sub(mod_time).Seconds()
-		m.delta = int(math.Round(delta))
-		m.file_name = file_config.FileName
-		m.alert = false
+		difference := act_time.Sub(mod_time).Seconds()
+		delta := int(math.Round(difference))
+
+		alert := false
 		active := false
-		week_days := file_config.week_days
-		start_time := file_config.start_time
-		end_time := file_config.end_time
+
 		// read todays weekday
 		act_weekday := int(time.Now().Weekday())
 		// read if monitoring_week_days is set, if not set default value
-		if week_days == nil {
-			week_days = m.default_week_days
+		week_days := file_config.WeekDays
+		if len(file_config.WeekDays) == 0 {
+			week_days = m.DefaultWeekDays
 		}
 		for _, x := range week_days {
-			if act_weekday == x {
-				active = true
-			}
+			if act_weekday == x { active = true	}
 		}
 		// read if max_delta is set, if not, add default value
-		m.max_delta = file_config.MaxDelta
+		max_delta := file_config.MaxDelta
+		if file_config.StartTime == nil {
+			max_delta = m.DefaultMaxDelta
+		}
 		// read if monitorin_start_time is set, if not set default value
-		if start_time == nil {
-			start_time = m.default_start_time
+		start_time := file_config.StartTime
+		if file_config.StartTime == nil {
+			start_time = m.DefaultStartTime
 		}
 		// read if monitoring_end_time is set, if not set default value
-		if end_time == nil {
-			end_time = m.default_end_time
+		end_time := file_config.EndTime
+		if len(file_config.EndTime) == 0 {
+			end_time = m.DefaultEndTime
 		}
 		// evaluate if we are now in a monitoring time window
+		
 		window_start := time.Date(year, month, start_time[0], start_time[1], 0, 0, 0, time.UTC)
 		window_end := time.Date(year, month, end_time[0], end_time[1], 0, 0, 0, time.UTC)
 		if window_start.After(act_time) && window_end.Before(act_time) && active {
 			// evaluate if this is an alert situation
-			if file_config.MaxDelta < m.delta {
-				m.alert = true
-			}
+			if max_delta < delta { alert = true }
 		} 
 
 		report.Event(mb.Event{
 			MetricSetFields: common.MapStr{
-				"delta": m.delta,
+				"delta": delta,
 				"max_delta": file_config.MaxDelta,
 				"file_name": file_config.FileName,
-				"alert": m.alert,
+				"alert": alert,
+				"active": active,
+				"start_time": file_config.StartTime,
+				"end_time": file_config.EndTime,
+				"week_days": file_config.WeekDays,
+
+				"default_max_delta": m.DefaultMaxDelta,
+				"default_start_time": m.DefaultStartTime,
+				"default_end_time": m.DefaultEndTime,
+				"default_week_days": m.DefaultWeekDays,
 			},
 		})
 
@@ -128,30 +134,24 @@ func (m *MetricSet) Fetch(report mb.ReporterV2) error {
 	return nil
 }
 
-// type DefaultConfig struct {
-// 	default_max_delta				int		`config:"default_max_delta"`
-// 	default_start_time				string	`config:"default_start_time"`
-// 	default_end_time				string	`config:"default_end_time"`
-// 	default_monitoring_week_days 	[]int	`config:"default_monitoring_week_days"`
-// }
-
 type FileConfig struct {
 	FileName			string	`config:"file_name"`
 	MaxDelta			int		`config:"max_delta"`
-	start_time			[]int	`config:"start_time"`
-	end_time			[]int	`config:"end_time"`
-	week_days			[]int	`config:"week_days"`
+	StartTime			[]int	`config:"start_time"`
+	EndTime				[]int	`config:"end_time"`
+	WeekDays			[]int	`config:"week_days"`
 }
 
 type Config struct {
 	FileConfig      	[]FileConfig 	`config:"files"`
-	default_max_delta	int		`config:"default_max_delta"`
-	default_start_time	[]int	`config:"default_start_time"`
-	default_end_time	[]int	`config:"default_end_time"`
-	default_week_days 	[]int	`config:"default_week_days"`
+	DefaultMaxDelta		int		`config:"default_max_delta"`
+	DefaultStartTime	[]int	`config:"default_start_time"`
+	DefaultEndTime		[]int	`config:"default_end_time"`
+	DefaultWeekDays 	[]int	`config:"default_week_days"`
 }
 
 func returnConfig() Config {
 	return Config{}
+
 }
 

@@ -1,11 +1,42 @@
-- key: my_module
-  title: "my_module"
+- name: file_mon
+  type: group
   release: beta
   description: >
-    my_module module is part of the metricbeat workshop 2
+    file_mon
   fields:
-    - name: my_module
-      type: group
+    - name: default_max_delta
+      type: object
+      object_type: long
+    - name: default_start_time
+      type: object
       description: >
-      fields:
+        default start time of monitoring window as array with 0:hour and 1:minutes
+    - name: default_end_time
+      type: object
+      description: >
+        default end time of monitoring window as array with 0:hour and 1:minutes
+    - name: default_monitoring_week_days
+      type: object
+      description: >
+        days of the week where the monitor alerts active as array with 0:sunday and 7:saturday
 
+    - name: files
+      type: object
+      description: >
+        the filenames with full path of the files that will monitored
+      fields:
+        - name: file_name 
+          type: keyword
+          description: >
+            Name of the file to get the modification time
+        - name: max_delta
+          type: object
+          object_type: long
+        - name: monitorin_start_time
+          type: object
+        - name: monitoring_end_time
+          type: object
+        - name: monitoring_week_days
+          type: object
+          description: >
+            Weekdays in ints

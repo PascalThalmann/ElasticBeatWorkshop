@@ -14,8 +14,11 @@ cp ~/go/src/github.com/elastic/beats/metricbeat/modules.d/my_module.yml ~/worksp
 
 ```
 
-## Create the Dockerfile
+## Build a Docker image
 
 ```
-
+cd ~/workspace/
+docker pull docker.elastic.co/beats/metricbeat:8.1.2
+docker build -f Dockerfile .
+docker run --net=host 46e0cad51bde
 ```

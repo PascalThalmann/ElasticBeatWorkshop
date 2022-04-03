@@ -77,6 +77,7 @@ func (m *MetricSet) Fetch(report mb.ReporterV2) error {
 
 		// read todays weekday
 		act_weekday := int(time.Now().Weekday())
+
 		// read if monitoring_week_days is set, if not set default value
 		if len(file_config.WeekDays) == 0 {
 			file_config.WeekDays = m.DefaultWeekDays
@@ -101,12 +102,12 @@ func (m *MetricSet) Fetch(report mb.ReporterV2) error {
 		if len(file_config.EndTime) == 0 {
 			file_config.EndTime = m.DefaultEndTime
 		}
-		// evaluate if we are now in a monitoring time window
 
+		// evaluate if we are now in a monitoring time window
 		window_start := time.Date(year, month, file_config.StartTime[0], file_config.StartTime[1], 0, 0, 0, time.UTC)
 		window_end := time.Date(year, month, file_config.EndTime[0], file_config.EndTime[1], 0, 0, 0, time.UTC)
-		if window_start.After(act_time) && window_end.Before(act_time) && active {
-			// evaluate if this is an alert situation
+		if window_start.Before(act_time) && window_end.After(act_time) && active {
+			// evaluate alert
 			if file_config.MaxDelta < delta {
 				alert = true
 			}

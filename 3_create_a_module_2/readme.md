@@ -5,11 +5,17 @@ You can find here the code in full length for the workshop [Elastic Beat Worksho
 ## Prepare the workspace
 
 ```
+cd ~/go/src/github.com/elastic/beats/metricbeat/
+
 mkdir ~/workspace
 mkdir ~/workspace/modules.d
-cp ~/go/src/github.com/elastic/beats/metricbeat/metricbeat ~/workspace
-cp ~/go/src/github.com/elastic/beats/metricbeat/metricbeat.yml ~/workspace/
-cp ~/go/src/github.com/elastic/beats/metricbeat/modules.d/my_module.yml ~/workspace/modules.d/
+tar zcvf my_module.tar.gz module/my_module \
+   fields.yml metricbeat.reference.yml \
+   metricbeat.yml modules.d/my_module.yml metricbeat
+mkdir ~/workspace
+cp my_module.tar.gz ~/workspace
+cd ~/workspace
+tar zxvf my_module.tar.gz
 ~/workspace/metricbeat -e -d "*"
 
 ```
@@ -20,5 +26,9 @@ cp ~/go/src/github.com/elastic/beats/metricbeat/modules.d/my_module.yml ~/worksp
 cd ~/workspace/
 docker pull docker.elastic.co/beats/metricbeat:8.1.2
 docker build -f Dockerfile .
-docker run --net=host 46e0cad51bde
+docker run --mount type=bind,source=/sys/fs/cgroup,target=/hostfs/sys/fs/cgroup,readonly --user root  -it 6209cf17c5b9
+
+
+
+
 ```

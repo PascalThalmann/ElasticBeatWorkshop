@@ -1,19 +1,14 @@
-#FROM docker.elastic.co/beats/metricbeat:8.1.2
-FROM ubuntu:latest
+FROM ubuntu:18.04
 
-#RUN rm -fr /usr/share/metricbeat/modules.d/*
 RUN mkdir -p /metricbeat/modules.d
-
-#COPY metricbeat /usr/share/metricbeat
-#COPY metricbeat.yml /usr/share/metricbeat
-#COPY metricbeat.reference.yml /usr/share/metricbeat
-#COPY fields.yml /usr/share/metricbeat
-#COPY modules.d/my_module.yml /usr/share/metricbeat/modules.d
+RUN apt update
+RUN apt -y upgrade
 
 COPY metricbeat /metricbeat
 COPY metricbeat.yml /metricbeat
 COPY metricbeat.reference.yml /metricbeat
 COPY fields.yml /metricbeat
 COPY modules.d/my_module.yml /metricbeat/modules.d/my_module.yml
+EXPOSE 9200
 
 CMD cd /metricbeat && ./metricbeat -e -d "*"

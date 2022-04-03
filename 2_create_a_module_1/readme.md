@@ -1,4 +1,4 @@
-# Elasticsearch Beat Workshop
+# Elastic Beat Workshop #2 – create your own Metricbeat shipper
 
 You can find here the code in full length for the workshop [Elasticsearch Beats Workshop #2 – create your own Metricbeat shipper](https://cdax.ch/2022/03/26/elasticsearch-beats-workshop-2-create-your-own-metricbeat-shipper/)
 

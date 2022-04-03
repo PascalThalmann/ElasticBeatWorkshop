@@ -1,5 +1,21 @@
-errormessage
+# Elastic Beat Workshop #3 – a more sophisticated configuration for your Metricset
+
+You can find here the code in full length for the workshop [Elastic Beat Workshop #3 – a more sophisticated configuration for your Metricset](https://cdax.ch/2022/03/05/elasticsearch-beat-workshop-1-secured-metricbeat/)
+
+## Prepare the workspace
 
 ```
-{"log.level":"error","@timestamp":"2022-04-02T10:59:21.364Z","log.origin":{"file.name":"runtime/panic.go","file.line":90},"message":"recovered from panic while fetching 'my_module/file_mon' for host 'localhost'. Recovering, but please report this.","service.name":"metricbeat","error":{"message":"runtime error: index out of range [0] with length 0"},"stack":"github.com/elastic/beats/v7/libbeat/logp.Recover\n\tgithub.com/elastic/beats/v7/libbeat/logp/global.go:102\nruntime.gopanic\n\truntime/panic.go:1038\nruntime.goPanicIndex\n\truntime/panic.go:90\ngithub.com/elastic/beats/v7/metricbeat/module/my_module/file_mon.(*MetricSet).Fetch\n\tgithub.com/elastic/beats/v7/metricbeat/module/my_module/file_mon/file_mon.go:107\ngithub.com/elastic/beats/v7/metricbeat/mb/module.(*metricSetWrapper).fetch\n\tgithub.com/elastic/beats/v7/metricbeat/mb/module/wrapper.go:251\ngithub.com/elastic/beats/v7/metricbeat/mb/module.(*metricSetWrapper).startPeriodicFetching\n\tgithub.com/elastic/beats/v7/metricbeat/mb/module/wrapper.go:223\ngithub.com/elastic/beats/v7/metricbeat/mb/module.(*metricSetWrapper).run\n\tgithub.com/elastic/beats/v7/metricbeat/mb/module/wrapper.go:207\ngithub.com/elastic/beats/v7/metricbeat/mb/module.(*Wrapper).Start.func1\n\tgithub.com/elastic/beats/v7/metricbeat/mb/module/wrapper.go:147","ecs.version":"1.6.0"}
+mkdir ~/workspace
+mkdir ~/workspace/modules.d
+cp ~/go/src/github.com/elastic/beats/metricbeat/metricbeat ~/workspace
+cp ~/go/src/github.com/elastic/beats/metricbeat/metricbeat.yml ~/workspace/
+cp ~/go/src/github.com/elastic/beats/metricbeat/modules.d/my_module.yml ~/workspace/modules.d/
+~/workspace/metricbeat -e -d "*"
+
+```
+
+## Create the Dockerfile
+
+```
+
 ```

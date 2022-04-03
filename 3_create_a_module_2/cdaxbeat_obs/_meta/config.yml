@@ -1,9 +1,0 @@
-- module: cdaxbeat
-  metricsets: ["filemon"]
-  enabled: true
-  period: 10s
-  hosts: ["localhost"]
-  files:
-  - file_name: "/var/log/syslog"
-    max_delta: 1200
-

@@ -1,0 +1,18 @@
+# Module: my_module
+# Docs: https://www.elastic.co/guide/en/beats/metricbeat/master/metricbeat-module-my_module.html
+
+- module: my_module
+  metricsets: ["file_mon"]
+  enabled: true
+  period: 10s
+  hosts: ["localhost"]
+  default_max_delta: 600
+  default_start_time: [8,0]
+  default_end_time: [22, 0]
+  default_week_days: [0, 1, 2, 3, 4, 5, 6]
+  files:
+  - file_name: "/var/log/syslog"
+    max_delta: 10
+    start_time: [2, 0]
+    end_time: [22, 0]
+    week_days: [0, 1, 2, 3, 4, 5]

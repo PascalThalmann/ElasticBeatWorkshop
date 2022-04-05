@@ -36,7 +36,7 @@ type MetricSet struct {
 // New creates a new instance of the MetricSet. New is responsible for unpacking
 // any MetricSet specific configuration options if there are any.
 func New(base mb.BaseMetricSet) (mb.MetricSet, error) {
-	cfgwarn.Beta("The {module} {metricset} metricset is beta.")
+	cfgwarn.Beta("The my_module file_mon metricset is beta.")
 
 	config := returnConfig()
 
@@ -67,7 +67,19 @@ func (m *MetricSet) Fetch(report mb.ReporterV2) error {
 
 	for _, file_config := range FileConfig {
 
-		f, _ := os.Open(file_config.FileName)
+		f, err := os.Open(file_config.FileName)
+
+		// we check if the file is even exisisting
+		if err != nil {
+			report.Event(mb.Event{
+				MetricSetFields: common.MapStr{
+					"error":     "file not existing",
+					"file_name": file_config.FileName,
+					"warning":   true,
+				},
+			})
+			continue
+		}
 		out, _ := f.Stat()
 		mod_time := out.ModTime()
 		difference := act_time.Sub(mod_time).Seconds()

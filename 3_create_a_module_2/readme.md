@@ -25,6 +25,7 @@ tar zxvf my_module.tar.gz
 ```
 cd ~/workspace/
 docker pull docker.elastic.co/beats/metricbeat:8.1.2
-docker build -f Dockerfile .
+docker build -f Dockerfile . -t my_module:1.0
 docker run --mount type=bind,source=/home/pascal/workspace/modules.d/,target=/metricbeat/modules.d -it 2ee827d94214
+docker image save -o my_module.tar.gz 96263f2a0c1e
 ```

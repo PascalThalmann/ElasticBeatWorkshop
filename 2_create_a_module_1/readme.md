@@ -42,7 +42,7 @@ make create-metricset
 
 ```
 
-### test the installation
+### Test the installation
 
 ```
 mage update

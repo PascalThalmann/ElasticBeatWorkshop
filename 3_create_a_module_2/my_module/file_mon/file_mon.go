@@ -43,7 +43,6 @@ type FileConfig struct {
 
 func returnConfig() MetricSet {
 	return MetricSet{}
-
 }
 
 // New creates a new instance of the MetricSet. New is responsible for unpacking

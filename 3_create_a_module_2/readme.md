@@ -22,6 +22,6 @@ tar zxvf my_module.tar.gz
 ```
 cd ~/workspace/
 docker build -f Dockerfile . -t my_module:1.0
-docker run --mount type=bind,source=/home/pascal/workspace/modules.d/,target=/metricbeat/modules.d -it [image id]
+docker run --mount type=bind,source=/home/devuser/workspace/modules.d/,target=/metricbeat/modules.d -it [image id]
 docker image save -o my_module.tar.gz [image id]
 ```

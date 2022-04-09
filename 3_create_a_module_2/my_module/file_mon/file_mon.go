@@ -26,11 +26,24 @@ func init() {
 // interface methods except for Fetch.
 type MetricSet struct {
 	mb.BaseMetricSet
-	DefaultMaxDelta  int
-	DefaultStartTime []int
-	DefaultEndTime   []int
-	DefaultWeekDays  []int
-	FileConfig       []FileConfig
+	DefaultMaxDelta  int          `config:"default_max_delta"`
+	DefaultStartTime []int        `config:"default_start_time"`
+	DefaultEndTime   []int        `config:"default_end_time"`
+	DefaultWeekDays  []int        `config:"default_week_days"`
+	FileConfig       []FileConfig `config:"files"`
+}
+
+type FileConfig struct {
+	FileName  string `config:"file_name"`
+	MaxDelta  int    `config:"max_delta"`
+	StartTime []int  `config:"start_time"`
+	EndTime   []int  `config:"end_time"`
+	WeekDays  []int  `config:"week_days"`
+}
+
+func returnConfig() MetricSet {
+	return MetricSet{}
+
 }
 
 // New creates a new instance of the MetricSet. New is responsible for unpacking
@@ -123,6 +136,8 @@ func (m *MetricSet) Fetch(report mb.ReporterV2) error {
 			if file_config.MaxDelta < delta {
 				alert = true
 			}
+		} else {
+			active = false
 		}
 
 		report.Event(mb.Event{
@@ -146,25 +161,4 @@ func (m *MetricSet) Fetch(report mb.ReporterV2) error {
 	}
 
 	return nil
-}
-
-type FileConfig struct {
-	FileName  string `config:"file_name"`
-	MaxDelta  int    `config:"max_delta"`
-	StartTime []int  `config:"start_time"`
-	EndTime   []int  `config:"end_time"`
-	WeekDays  []int  `config:"week_days"`
-}
-
-type Config struct {
-	FileConfig       []FileConfig `config:"files"`
-	DefaultMaxDelta  int          `config:"default_max_delta"`
-	DefaultStartTime []int        `config:"default_start_time"`
-	DefaultEndTime   []int        `config:"default_end_time"`
-	DefaultWeekDays  []int        `config:"default_week_days"`
-}
-
-func returnConfig() Config {
-	return Config{}
-
 }

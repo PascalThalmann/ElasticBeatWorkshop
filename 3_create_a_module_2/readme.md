@@ -1,6 +1,6 @@
 # Elastic Beat Workshop #3 – a more sophisticated configuration for your Metricset
 
-You can find here the code in full length for the workshop [Elastic Beat Workshop #3 – a more sophisticated configuration for your Metricset](https://cdax.ch/2022/03/05/elasticsearch-beat-workshop-1-secured-metricbeat/)
+You can find here the code in full length for the workshop [Elastic Beat Workshop #3 – a more sophisticated configuration for your Metricset](https://cdax.ch/2022/04/09/elasticsearch-beats-workshop-3-a-more-sophisticated-configuration-for-your-metricset/)
 
 ## Prepare the workspace
 

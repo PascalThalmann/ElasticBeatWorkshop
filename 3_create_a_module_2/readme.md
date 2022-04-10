@@ -22,6 +22,43 @@ tar zxvf my_module.tar.gz
 ```
 cd ~/workspace/
 docker build -f Dockerfile . -t my_module:1.0
-docker run --mount type=bind,source=/home/devuser/workspace/modules.d/,target=/metricbeat/modules.d -it [image id]
+```
+
+## Upload the Docker image to your registry
+
+```
+docker login -u xxx -p yyy [local-registry]:[port]
+docker build -f Dockerfile . -t my_module:1.1
+docker image tag my_module:1.1 srvnexus:8082/repository/dh/my_module:1.1
+docker image push srvnexus:8082/repository/dh/my_module:1.1
+```
+
+## pull your docker image from your registry
+
+```
+docker pull srvnexus:8082/repository/dh/my_module:1.1
+```
+
+## save the docker image as a tarball
+
+```
 docker image save -o my_module.tar.gz [image id]
+```
+
+## Run the Docker container
+
+```
+METRICPATH=$HOME/workspace/metricbeat.yml
+MODULEPATH=$HOME/workspace/modules.d
+
+docker run \
+--mount type=bind,source=$MODULEPATH,target=/metricbeat/modules.d \
+--mount type=bind,source=$METRICPATH,target=/metricbeat/metricbeat.yml \
+[image id]
+```
+
+## Pull the my_module Docker image from Dockerhub.io
+
+```
+docker pull cdax75/workshop:my_module
 ```

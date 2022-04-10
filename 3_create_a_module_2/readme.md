@@ -54,7 +54,7 @@ MODULEPATH=$HOME/workspace/modules.d
 docker run \
 --mount type=bind,source=$MODULEPATH,target=/metricbeat/modules.d \
 --mount type=bind,source=$METRICPATH,target=/metricbeat/metricbeat.yml \
-[image id]
+-it [image id]
 ```
 
 ## Pull the my_module Docker image from Dockerhub.io

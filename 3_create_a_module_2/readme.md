@@ -57,7 +57,7 @@ docker run \
 -it [image id]
 ```
 
-## Pull the my_module Docker image from Dockerhub.io
+## Pull the my_module Docker image from Docker.com
 
 ```
 docker pull cdax75/workshop:my_module

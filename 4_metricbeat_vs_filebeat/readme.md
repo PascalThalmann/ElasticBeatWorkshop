@@ -1,6 +1,6 @@
 # Elastic Beat Workshop #4 – Metricbeat versus Filebeat
 
-You can find here the code in full length for the workshop [Elastic Beat Workshop #4 – Metricbeat versus Filebeat](https://cdax.ch/2022/04/09/elasticsearch-beats-workshop-3-a-more-sophisticated-configuration-for-your-metricset/)
+You can find here the code in full length for the workshop [Elastic Beat Workshop #4 – Metricbeat versus Filebeat](https://cdax.ch/2022/04/17/elasticsearch-beats-workshop-4-metricbeat-versus-filebeat/)
 
 ## Installing Filebeat
 
